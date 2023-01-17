@@ -46,19 +46,20 @@ function decode(expr) {
         array4 = [],
         array5 = [];
     let newStr = '';
-    for (let i = 0; i < expr.length; i += 10) {  
-        array.push(expr.slice(i, i + 10));
-    }
 
-    for (let i = 0; i < array.length; i++) {
-        for (let j = 0; j < array[i].length; j += 2) {
-            array2.push(array[i].slice(j, j + 2));
+    function getSubarray(oldArray, newArray, count) {
+        for (let i = 0; i < oldArray.length; i += count) {  
+            newArray.push(oldArray.slice(i, i + count));
         }
     }
 
-    for (let i = 0; i < array2.length; i += 5) {
-        array3.push(array2.slice(i, i + 5));
+    getSubarray(expr, array, 10);
+
+    for (let i = 0; i < array.length; i++) {
+        getSubarray(array[i], array2, 2);
     }
+
+    getSubarray(array2, array3, 5);
 
     for (let i = 0; i < array3.length; i++) {
         for (let j = 0; j < array3[i].length; j++) {
@@ -81,8 +82,7 @@ function decode(expr) {
 
     return newStr;
 }
+
 module.exports = {
     decode
 }
-
-//console.log(decode('0000101010000000101100101010110000000010**********00000011110000000010'));
